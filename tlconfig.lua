@@ -5,4 +5,5 @@ return {
     "**/*.tl"
   },
   build_dir = "build-lua",
+  global_env_def = "ao"
 }

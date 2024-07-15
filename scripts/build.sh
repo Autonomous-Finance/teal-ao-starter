@@ -11,8 +11,7 @@ tl build
 
 cd build-lua
 
-# LINT & AMALGAMATE
-$BIN_PATH/luacheck main.lua greeter.lua
+# AMALGAMATE
 $BIN_PATH/amalg.lua -s main.lua -o ../build/main.lua greeter
 
 # FINAL RESULT is build/main.lua

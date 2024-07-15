@@ -1,7 +1,10 @@
 local mod = {}
 
-function mod.greet(name: string)
-    print("Hello, " .. name)
+function mod.greet(msg: Message)
+    ao.send({
+        Target = msg.From,
+        Data = "Hello, " .. msg.Tags.name
+    })
 end
 
 return mod
