@@ -11,7 +11,7 @@ It allows for a workflow similar to that in web development with *Typescript*, w
 3. Use `npm run build` to create your `main.lua` output
 
 
-## Background
+## How It Works
 
 *Teal* is a superset of *Lua* that allows for typed programming in *Lua*.
 
