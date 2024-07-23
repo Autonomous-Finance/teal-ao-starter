@@ -1,33 +1,33 @@
-global record bint
-  -- Function to check if a value is of type bint
+global record BigInteger
+  -- Function to check if a value is of type BigInteger
   isbint: function(value: any): boolean
 
   -- Function to return a bint value of zero
-  zero: function(): bint
+  zero: function(): BigInteger
 
   -- Constructor function
-  new: function(value: number): bint  -- Added constructor function
+  new: function(value: number): BigInteger  -- Added constructor function
 
   -- Arithmetic operations
-  metamethod __add: function(a: bint, b: bint): bint
-  metamethod __sub: function(a: bint, b: bint): bint
-  metamethod __mul: function(a: bint, b: bint): bint
-  metamethod __div: function(a: bint, b: bint): bint
-  metamethod __idiv: function(a: bint, b: bint): bint
+  metamethod __add: function(a: BigInteger, b: BigInteger): BigInteger
+  metamethod __sub: function(a: BigInteger, b: BigInteger): BigInteger
+  metamethod __mul: function(a: BigInteger, b: BigInteger): BigInteger
+  metamethod __div: function(a: BigInteger, b: BigInteger): BigInteger
+  metamethod __idiv: function(a: BigInteger, b: BigInteger): BigInteger
 
   -- Comparison operations
-  metamethod __eq: function(a: bint, b: bint): boolean
-  metamethod __lt: function(a: bint, b: bint): boolean
-  metamethod __le: function(a: bint, b: bint): boolean
+  metamethod __eq: function(a: BigInteger, b: BigInteger): boolean
+  metamethod __lt: function(a: BigInteger, b: BigInteger): boolean
+  metamethod __le: function(a: BigInteger, b: BigInteger): boolean
 
   -- String representation
-  metamethod __tostring: function(a: bint): string
+  metamethod __tostring: function(a: BigInteger): string
 end
 
 global record bintModule
-  metamethod __call: function(self: bintModule, bits: integer): bint  -- Updated to include self parameter
+  metamethod __call: function(self: bintModule, bits: integer): BigInteger  -- Updated to include self parameter
 
   -- Other bint functions
   isbint: function(value: any): boolean
-  zero: function(): bint
+  zero: function(): BigInteger
 end
