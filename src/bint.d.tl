@@ -26,8 +26,4 @@ end
 
 global record bintModule
   metamethod __call: function(self: bintModule, bits: integer): BigInteger  -- Updated to include self parameter
-
-  -- Other bint functions
-  isbint: function(value: any): boolean
-  zero: function(): BigInteger
 end
