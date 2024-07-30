@@ -7,11 +7,12 @@ else
 fi
 
 # GENERATE LUA in /build-lua
-tl build
+mkdir -p ./build
+mkdir -p ./build-lua
 
-cd build-lua
+# build teal
+cyan build -u
 
-# AMALGAMATE
-$BIN_PATH/amalg.lua -s main.lua -o ../build/main.lua greeter
+docker run --rm -it -v $(pwd):/build -w /build lalex/lua-squish
 
 # FINAL RESULT is build/main.lua
