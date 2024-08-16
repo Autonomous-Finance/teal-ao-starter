@@ -1,8 +1,0 @@
-Main "./build-lua/token/main.lua"
-
-Module "dummy.dummy" "./build-lua/dummy/dummy.lua"
-Module "token.utils.bint" "./build-lua/token/utils/bint.lua"
-Module "token.utils.tl-utils" "./build-lua/token/utils/tl-utils.lua"
-
-Option "minify-level" "none"
-Output 'build/token.lua'

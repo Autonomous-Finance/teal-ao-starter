@@ -424,10 +424,8 @@ local function newmodule(bits, wordbits)
 
    local function bint_assert_convert(x)
       if not bint.isbint(x) then
-         print('x is ', x)
-         print('type is ', type(x))
          print(debug.traceback())
-         assert(bint.isbint(x), 'value has not integer representation')
+         assert(bint.isbint(x), 'bint_assert_convert: expected BigInteger, got ' .. type(x) .. ' value ' .. tostring(x))
       end
       return x
    end
@@ -435,10 +433,8 @@ local function newmodule(bits, wordbits)
 
    local function bint_assert_convert_clone(x)
       if not bint.isbint(x) then
-         print('x is ', x)
-         print('type is ', type(x))
          print(debug.traceback())
-         assert(bint.isbint(x), 'value has not integer representation')
+         assert(bint.isbint(x), 'bint_assert_convert_clone: expected BigInteger, got ' .. type(x) .. ' value ' .. tostring(x))
       end
       local n = setmetatable({}, bint)
       local xi = x
@@ -450,10 +446,8 @@ local function newmodule(bits, wordbits)
 
 
    local function bint_assert_convert_from_integer(x)
-      print('bint_assert_convert_from_integer', x, type(x))
       local xi = bint_frominteger(x)
-      print('bint_assert_convert_from_integer', xi)
-      assert(xi, 'value has not integer representation')
+      assert(xi, 'bint_assert_convert_from_integer: could not convert integer to big integer' .. type(x) .. ' value ' .. tostring(x))
       return xi
    end
 
@@ -474,8 +468,6 @@ local function newmodule(bits, wordbits)
       local step = getbasestep(base)
       if #s < step then
 
-         print('small string')
-         print('frombase2', type(bint_frominteger(tonumber(s, base))))
          return bint_frominteger(tonumber(s, base))
       end
       local sign
@@ -501,7 +493,6 @@ local function newmodule(bits, wordbits)
       if sign == '-' then
          n:_unm()
       end
-      print('n is', type(n), n)
       return n
    end
    local bint_frombase = bint.frombase
@@ -639,10 +630,7 @@ local function newmodule(bits, wordbits)
    local function bint_assert_tointeger(x)
       local xi = bint_tointeger(x)
       if not xi then
-         print('value is', x)
-         print('type is', type(x))
-         print(debug.traceback())
-         error('value has no integer representation')
+         error('bint_assert_tointeger: cannot convert to integer, got ' .. type(x) .. ' value ' .. tostring(x))
       end
       return xi
    end
@@ -1038,7 +1026,6 @@ local function newmodule(bits, wordbits)
       if y <= 0 then
          return bint_zero()
       elseif y < BINT_BITS then
-         print('bwrap y', y, type(y))
          local tmp = (bint_one() << y)
          local tmp2 = tmp:_dec():tointeger()
          return x & tmp2
@@ -1380,33 +1367,22 @@ local function newmodule(bits, wordbits)
       bint_assert_convert(y)
       local ax
       local ay
-      print('initial x,y', x, y, ax, ay)
       ax, ay = bint_abs(x), bint_abs(y)
 
       local ix
       local iy
       ix, iy = tobint(ax), tobint(ay)
-      print('ix,iy', ix, iy)
       local quot
       local rema
       if ix and iy then
          assert(not (bint_eq(x, BINT_MININTEGER) and bint_isminusone(y)), 'division overflow')
-         print('pre udiv ix,iy', ix, iy)
-         print('pre udiv x,y', x, y)
-
          quot, rema = bint_udivmod(ix, iy)
-         print('quot', quot)
-         print('rema', rema)
-         print('post udiv x,y', x, y)
-
       else
          quot, rema = ax // ay, ax % ay
       end
       local isxneg
       local isyneg
       isxneg, isyneg = bint_isneg(x), bint_isneg(y)
-      print('isneg', isxneg, isyneg)
-      print('ix,iy', x, y)
 
       if isxneg ~= isyneg then
          quot = -quot
@@ -1427,7 +1403,6 @@ local function newmodule(bits, wordbits)
    function bint.tdiv(x, y)
       bint_assert_convert(x)
       bint_assert_convert(y)
-      print('tdiv x,y', x, y)
       return (bint_tdivmod(x, y))
    end
 
@@ -1815,7 +1790,6 @@ local function newmodule(bits, wordbits)
    function bint:ge(y)
       return self:eq(y) or self:gt(y)
    end
-
 
 
 

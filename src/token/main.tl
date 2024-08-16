@@ -35,9 +35,10 @@ Variant = "0.0.3"
 Denomination = Denomination or "12"
 Balances = Balances or { [ao.id] = utils.toBalanceValue(10000 * 10 ^ tonumber(Denomination)) }
 TotalSupply = TotalSupply or utils.toBalanceValue(10000 * 10 ^ tonumber(Denomination))
-Name = Name or 'Points Coin'
-Ticker = Ticker or 'PNTS'
+Name = Name or ao.env.Process.Tags.Name
+Ticker = Ticker or ao.env.Process.Tags.Ticker
 Logo = Logo or 'SBCCXwwecBlDqRLUjb8dYABExTJXLieawf7m2aBJ-KY'
+
 
 -- Handler functions
 local function infoHandler(msg: Message)
@@ -134,21 +135,13 @@ local function mintHandler(msg: Message)
 
   if not Balances[ao.id] then Balances[ao.id] = "0" end
 
-  if msg.From == ao.id then
-    Balances[msg.From] = utils.add(Balances[msg.From], msg.Tags.Quantity)
-    TotalSupply = utils.add(TotalSupply, msg.Tags.Quantity)
-    ao.send({
-      Target = msg.From,
-      Data = Colors.gray .. "Successfully minted " .. Colors.blue .. msg.Tags.Quantity .. Colors.reset
-    })
-  else
-    ao.send({
-      Target = msg.From,
-      Action = 'Mint-Error',
-      ['Message-Id'] = msg.Tags.Id,
-      Error = 'Only the Process Id can mint new ' .. Ticker .. ' tokens!'
-    })
-  end
+  -- anyone can mint
+  Balances[msg.From] = utils.add(Balances[msg.From] or '0', msg.Tags.Quantity)
+  TotalSupply = utils.add(TotalSupply or '0', msg.Tags.Quantity)
+  ao.send({
+    Target = msg.From,
+    Data = Colors.gray .. "Successfully minted " .. Colors.blue .. msg.Tags.Quantity .. Colors.reset
+  })
 end
 
 
@@ -175,7 +168,6 @@ local function burnHandler(msg: Message)
     Data = Colors.gray .. "Successfully burned " .. Colors.blue .. msg.Tags.Quantity .. Colors.reset
   })
 end
-
 -- Add handlers
 Handlers.add('info', Handlers.utils.hasMatchingTag('Action', 'Info'), infoHandler)
 Handlers.add('balance', Handlers.utils.hasMatchingTag('Action', 'Balance'), balanceHandler)

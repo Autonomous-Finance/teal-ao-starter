@@ -13,6 +13,11 @@ mkdir -p ./build-lua
 # build teal
 cyan build -u
 
-docker run --rm -it -v $(pwd):/build -w /build lalex/lua-squish
+cd build-lua
+
+amalg.lua -s token/main.lua -o ../build/token.lua \
+    token.utils.bint token.utils.tl-utils \
+    dummy.dummy
+
 
 # FINAL RESULT is build/main.lua
