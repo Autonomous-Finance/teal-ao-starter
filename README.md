@@ -6,7 +6,7 @@ It allows for a workflow similar to that in web development with *Typescript*, w
 
 ## How to Use
 
-1. `luarocks install tl && luarocks install cyan` 
+1. `luarocks install tl && luarocks install cyan && luarocks install amalg` 
 2. Write your code in *Teal* (using `.tl` files)
 3. Add your modules into the Squishy file (used to generate the final amalgamation)
 4. Use `npm run build` to create your `main.lua` output
